@@ -56,4 +56,22 @@ public class CardTodoController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/undo")
+    public ResponseEntity<Card> undoLastChange() {
+        Card undoCard = this.cardTodoService.undoLastChange();
+        if (undoCard == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(undoCard,  HttpStatus.OK);
+    }
+
+    @GetMapping("/redo")
+    public ResponseEntity<Card> redoLastUndo() {
+        Card redoCard = this.cardTodoService.redoLastUndo();
+        if (redoCard == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(redoCard,  HttpStatus.OK);
+    }
 }
