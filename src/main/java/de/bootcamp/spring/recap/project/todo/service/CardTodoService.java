@@ -3,9 +3,7 @@ package de.bootcamp.spring.recap.project.todo.service;
 import de.bootcamp.spring.recap.project.todo.dto.CardDto;
 import de.bootcamp.spring.recap.project.todo.exceptions.CardNotFoundException;
 import de.bootcamp.spring.recap.project.todo.model.Card;
-import de.bootcamp.spring.recap.project.todo.model.CardStatus;
 import de.bootcamp.spring.recap.project.todo.repository.CardRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +22,8 @@ public class CardTodoService {
     }
 
     public List<Card> getAllCards() {
-        return this.cardRepository.findCardsByStatus(CardStatus.OPEN);
+        //return this.cardRepository.findCardsByStatus(CardStatus.OPEN);
+        return this.cardRepository.findAll();
     }
 
     public Card addCard(CardDto cardDto) {
