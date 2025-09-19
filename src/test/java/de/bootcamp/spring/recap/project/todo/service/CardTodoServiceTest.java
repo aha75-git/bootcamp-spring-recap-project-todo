@@ -41,13 +41,13 @@ public class CardTodoServiceTest {
     @Test
     void getAllCards_shouldReturnCards_whenStatusIsOpen() {
         // GIVEN
-        when(mockRepo.findCardsByStatus(CardStatus.OPEN)).thenReturn(cards);
+        when(mockRepo.findAll()).thenReturn(cards);
 
         // WHEN
         var actual = cardTodoService.getAllCards();
 
         // THEN
-        verify(mockRepo).findCardsByStatus(CardStatus.OPEN);
+        verify(mockRepo).findAll();
         assertEquals(cards.size(), actual.size());
     }
 
