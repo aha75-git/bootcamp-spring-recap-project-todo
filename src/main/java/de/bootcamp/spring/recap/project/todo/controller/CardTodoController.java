@@ -24,10 +24,10 @@ public class CardTodoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Card> getCardById(@PathVariable String id) {
+    public ResponseEntity<Card> getCardById(@PathVariable String id) throws CardNotFoundException {
         Card card = this.cardTodoService.getCardById(id);
         if (card == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new CardNotFoundException("Das Ticket mit der ID: " + id + " existiert nicht!");
         }
         return new ResponseEntity<>(card, HttpStatus.OK);
     }
@@ -39,21 +39,17 @@ public class CardTodoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Card> updateCard(@PathVariable String id, @RequestBody CardDto cardDto) {
+    public ResponseEntity<Card> updateCard(@PathVariable String id, @RequestBody CardDto cardDto) throws CardNotFoundException {
         Card updatedCard = this.cardTodoService.updateCard(id, cardDto);
         if (updatedCard == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new CardNotFoundException("Das Ticket mit der ID: " + id + " existiert nicht!");
         }
         return new ResponseEntity<>(updatedCard,  HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCardById(@PathVariable String id) {
-        try {
-            this.cardTodoService.deleteCardById(id);
-        } catch (CardNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> deleteCardById(@PathVariable String id) throws CardNotFoundException {
+        this.cardTodoService.deleteCardById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

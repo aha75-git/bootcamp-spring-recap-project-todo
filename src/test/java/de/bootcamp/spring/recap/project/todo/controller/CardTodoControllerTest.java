@@ -87,7 +87,9 @@ public class CardTodoControllerTest {
         // WHEN
         mockMvc.perform(MockMvcRequestBuilders.get("/api/todo/" + id))
         // THEN
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message")
+                        .value("Das Ticket mit der ID: " + id + " existiert nicht!"));;
     }
 
     @Test
@@ -162,7 +164,9 @@ public class CardTodoControllerTest {
                                  }                      
                                 """))
                 // THEN
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message")
+                        .value("Das Ticket mit der ID: " + id + " existiert nicht!"));;
     }
 
     @Test
@@ -185,12 +189,12 @@ public class CardTodoControllerTest {
         String id = "5";
 
         // WHEN
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/todo/" + id))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
-
-        // THEN
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/todo/" + id))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+        // THEN
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message")
+                        .value("Das Ticket mit der ID: " + id + " existiert nicht!"));
+        ;
 
     }
 }
