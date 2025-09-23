@@ -24,6 +24,7 @@ public class CardTodoServiceTest {
     IdService mockIdService;
     CardRepository mockRepo;
     CardTodoService cardTodoService;
+    ChatGPTService  chatGPTService;
 
     @BeforeEach
     void setUp() {
@@ -33,9 +34,10 @@ public class CardTodoServiceTest {
         cards = new ArrayList<>();
         cards.add(card1);
         cards.add(card2);
+        chatGPTService = mock(ChatGPTService.class);
         mockIdService = mock(IdService.class);
         mockRepo = mock(CardRepository.class);
-        cardTodoService = new CardTodoService(mockRepo, mockIdService);
+        cardTodoService = new CardTodoService(mockRepo, mockIdService,  chatGPTService);
     }
 
     @Test

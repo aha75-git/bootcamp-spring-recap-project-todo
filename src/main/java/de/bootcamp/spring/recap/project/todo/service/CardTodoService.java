@@ -15,10 +15,12 @@ public class CardTodoService {
     private final Stack<Card> redoStack = new Stack<>();
     private final CardRepository cardRepository;
     private final IdService idService;
+    private final ChatGPTService chatGPTService;
 
-    public CardTodoService(CardRepository cardRepository, IdService idService) {
+    public CardTodoService(CardRepository cardRepository, IdService idService, ChatGPTService chatGPTService) {
         this.cardRepository = cardRepository;
         this.idService = idService;
+        this.chatGPTService = chatGPTService;
     }
 
     public List<Card> getAllCards() {
@@ -27,9 +29,10 @@ public class CardTodoService {
     }
 
     public Card addCard(CardDto cardDto) {
+        // TODO  this.checkSpelling(cardDto.description());
         Card card = this.cardRepository.save(
                 new Card(idService.randomId(),
-                        cardDto.description(),
+                        this.checkSpelling(cardDto.description()),
                         cardDto.status())
         );
         undoStack.push(card); // Für Undo-Funktionalität
@@ -44,8 +47,9 @@ public class CardTodoService {
         Card card = null;
         Card cardOld = this.cardRepository.findById(id).orElse(null);
         if (cardOld != null) {
+            // TODO  checkSpelling(String text)
             card = this.cardRepository.save(cardOld
-                    .withDescription(cardDto.description())
+                    .withDescription(this.checkSpelling(cardDto.description()))
                     .withStatus(cardDto.status())
             );
             undoStack.push(card); // Für Undo-Funktionalität
@@ -85,5 +89,19 @@ public class CardTodoService {
         return null;
     }
 
+    public String checkSpelling(String text) {
+        //String requestBody = "{ \"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"Please check the spelling of the following text: " + text + "\"}] }";
+        // ChatGPT Textüberprüfung
 
+        System.out.println("Text zum Überprüfen auf Rechtschreibung: " + text);
+
+        String spellingRequest = """
+                ChatGPT Textüberprüfung. Bitte überprüfe diesen Text auf Rechtschreibfehler und gib nur die Korrigierte Fassung ohne zusätzliche Informationen zurück: "
+                """ + text + """
+                "
+                """;
+        String result = this.chatGPTService.createChatCompletionAndCheckSpelling(spellingRequest);
+        System.out.println(result);
+        return result;
+    }
 }
