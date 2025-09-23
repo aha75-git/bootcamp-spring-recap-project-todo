@@ -3,7 +3,6 @@ package de.bootcamp.spring.recap.project.todo.service;
 import de.bootcamp.spring.recap.project.todo.model.openai.OpenAiMessage;
 import de.bootcamp.spring.recap.project.todo.model.openai.OpenAiRequest;
 import de.bootcamp.spring.recap.project.todo.model.openai.OpenAiResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,6 @@ package de.bootcamp.spring.recap.project.todo.controller;
 
 import de.bootcamp.spring.recap.project.todo.model.Card;
 import de.bootcamp.spring.recap.project.todo.model.CardStatus;
-import de.bootcamp.spring.recap.project.todo.model.openai.OpenAiResponse;
 import de.bootcamp.spring.recap.project.todo.repository.CardRepository;
 import de.bootcamp.spring.recap.project.todo.service.ChatGPTService;
 import org.junit.jupiter.api.BeforeEach;
